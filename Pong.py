@@ -1,3 +1,4 @@
+import time
 import turtle
 wn=turtle.Screen()
 wn.title("Pong by Me!!")
@@ -79,6 +80,17 @@ wn.onkeypress(paddle_b_down,"Down")
 #Main game loop
 while True:
     wn.update()
+    
+    if score_a >= 10 or score_b >= 10:
+        winner = "Player A" if score_a >= 10 else "Player B"
+        message = "{} wins!".format(winner)
+        pen.clear()  
+        pen.goto(0, 0)
+        pen.write(message, align="center", font=("Courier", 36, "bold"))
+        time.sleep(3)  
+        pen.clear()
+        wn.bye()
+        
     ball.setx(ball.xcor()+ball.dx/20)
     ball.sety(ball.ycor()+ball.dy/20)
     if ball.ycor()>290:
@@ -99,6 +111,15 @@ while True:
         score_b+=1
         pen.clear()
         pen.write("Player A: {} Player B: {}".format(score_a,score_b), align="center",font=("Courier",24,"normal"))
+    
+    if paddle_a.ycor() > 250:
+        paddle_a.sety(250)
+    if paddle_a.ycor() < -240:
+        paddle_a.sety(-240)
+    if paddle_b.ycor() > 250:
+        paddle_b.sety(250)
+    if paddle_b.ycor() < -240:
+        paddle_b.sety(-240)
         
     if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()+40 and ball.ycor()>paddle_b.ycor()-40):
         ball.setx(340)
@@ -106,4 +127,3 @@ while True:
     if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()+40 and ball.ycor()>paddle_a.ycor()-40):
         ball.setx(-340)
         ball.dx*=-1
-        
